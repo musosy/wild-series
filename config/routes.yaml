@@ -1,3 +1,8 @@
-#index:
-#    path: /
-#    controller: App\Controller\DefaultController::index
+app_index:
+  path: /
+  controller: App\Controller\DefaultController::index
+
+program_index:
+  path: /programs
+  controller: App\Controller\ProgramController::index
+
