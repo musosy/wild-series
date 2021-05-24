@@ -1,0 +1,34 @@
+$custom-prim: #19647E;
+$custom-sec: #28AFB0;
+$custom-ter: #FFFC31;
+$custom-light: #F6F7EB;
+$custom-dark: #37392E;
+
+$title-font: 'Lobster', cursive;
+$main-font: Verdana;
+$extra-font: 'Open Sans Condensed', sans-serif;
+
+
+@import "~bootstrap/scss/bootstrap";
+
+* {
+    color: $custom-dark !important;
+    font-family: $main-font;
+}
+
+html, body {
+    background-color: $custom-light;
+}
+
+#navbar {
+    height: 5rem;
+    background-color: $custom-prim !important;
+    
+    font-size: 1.5rem;
+}
+
+nav > a {
+    font-family: $title-font;
+    font-size: 3rem !important;
+    color: $custom-ter !important;
+}
