@@ -15,9 +15,7 @@ class ProgramController extends AbstractController
      */
     public function index(): Response
     {
-        return $this->render('program/index.html.twig', [
-            'website' => "Wild Séries",
-        ]);
+        return $this->render('program/index.html.twig');
     }
 
     /**
@@ -26,7 +24,6 @@ class ProgramController extends AbstractController
     public function show(int $page = 1): Response
     {
         return $this->render('program/show.html.twig', [
-            'website' => "Wild Séries",
             'page' => $page
         ]);
     }
