@@ -19,6 +19,21 @@ class ProgramRepository extends ServiceEntityRepository
         parent::__construct($registry, Program::class);
     }
 
+    /**
+     * @return Program[] Returns an array of 3 programs ordered by id ASC on a category id
+     */
+    public function findByCategory(int $id)
+    {
+        return $this->createQueryBuilder('p')
+            ->andWhere('p.category = :id')
+            ->setParameter('id', $id)
+            ->orderBy('p.id', 'ASC')
+            ->setMaxResults(3)
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
     // /**
     //  * @return Program[] Returns an array of Program objects
     //  */
