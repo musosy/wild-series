@@ -11,7 +11,17 @@ Show
     <p>Catégorie : {{ program.category.name }}</p>
   </div>
 </div>
-
+<div class="container d-flex justify-content-evenly">
+  {% for season in seasons %}
+  <div>
+    <h2>Season #{{ season.number }}</h2>
+    <p>{{ season.description }}</p>
+    <a href="{{ path('program_season_show', {id: program.id, seasonId: season.id}) }}">Voir les épisodes de la saison</a>
+  </div>
+  {% else %}
+  Aucune saison trouvée ...
+  {% endfor %}
+</div>
 <a href="{{ path('program_index') }}">
     Retour à la liste des programmes
 </a>
