@@ -13,11 +13,21 @@ class ProgramController extends AbstractController
     /**
      * @Route("/", name="index")
      */
-
     public function index(): Response
     {
         return $this->render('program/index.html.twig', [
             'website' => "Wild Séries",
+        ]);
+    }
+
+    /**
+     * @Route("/{page<\d+>}", methods={"GET"}, name="show")
+     */
+    public function show(int $page = 1): Response
+    {
+        return $this->render('program/show.html.twig', [
+            'website' => "Wild Séries",
+            'page' => $page
         ]);
     }
 }
