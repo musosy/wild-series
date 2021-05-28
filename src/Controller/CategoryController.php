@@ -35,14 +35,11 @@ class CategoryController extends AbstractController
      * @Route("/{name<[a-zA-Z]+>}", methods={"GET"}, name="show")
      * @return Response
      */
-    public function show(string $name): Response
+    public function show(Category $category): Response
     {
-        $category = $this->getDoctrine()
-            ->getRepository(Category::class)
-            ->findOneBy(['name' => $name]);
         if (!$category) {
             throw $this->createNotFoundException(
-                'No category with id: ' .$name. ' found in category\'s table.'
+                'No susch category found in category\'s table.'
             );
         }
         $programs = $this->getDoctrine()
@@ -50,7 +47,7 @@ class CategoryController extends AbstractController
             ->findByCategory($category->getId());
         if (!$programs) {
             throw $this->createNotFoundException(
-                'No programs with this category: ' .$name. ' found.'
+                'No programs found in this category.'
             );
         }
         return $this->render('category/show.html.twig', [

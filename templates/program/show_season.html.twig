@@ -1,6 +1,6 @@
 {% extends "base.html.twig" %}
 {% block title %}
-Show
+Season
 {% endblock %}
 {% block body %}
 <div class="media">
@@ -14,6 +14,7 @@ Show
             <h4>
                 #{{episode.number}} - {{episode.title}}
             </h4>
+            <a href="{{ path('program_episode_show', {id: program.id, seasonId: season.id, episodeId: episode.id}) }}">Voir le résumé de l'épisode.</a>
         </div>
         {% endfor %}
     </ul>

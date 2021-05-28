@@ -6,7 +6,6 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Season;
 use App\DataFixtures\ProgramFixtures;
-use App\Entity\Program;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class SeasonFixtures extends Fixture implements DependentFixtureInterface

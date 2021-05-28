@@ -52,7 +52,6 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
                 'category_id' => 1 
             ]
         ];
-        $programRef = [];
         foreach ($programs as $key => $data) {
             $program = new Program();
             $program->setTitle($data['title']);
