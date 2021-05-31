@@ -4,14 +4,14 @@
 {% endblock %}
 {% block body %}
 <div class="container">
-  <div class="card mb-3" style="max-width: 90vw;">
+  <div class="card mb-3 p-3" style="max-width: 90vw;">
     <div class="row g-0">
       <div class="col-lg-6 text-center align-self-center">
         <img src="{{program.poster}}" alt="{{ program.title }} poster" style="max-width: 80%;">
       </div>
       <div class="col-lg-6">
         <div class="card-body">
-          <h1 class="card-title light">{{ program.title }}</h5>
+          <h1 class="custom-title-dark">{{ program.title }}</h5>
           <p class="card-text light">{{ program.summary }}</p>
           <div class="d-flex justify-content-evenly flex-wrap">
             {% for season in seasons %}

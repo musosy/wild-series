@@ -13,7 +13,7 @@
         {% for episode in episodes %}
         {% include "program/_episode.html.twig" %}
         {% endfor %}
-    </ul>
+    </div>
 </div>
 <a href="{{ path('program_show', {program: program.id}) }}">
     Retour à la fiche de la série

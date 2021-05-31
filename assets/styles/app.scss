@@ -12,12 +12,18 @@ $extra-font: 'Open Sans Condensed', sans-serif;
 @import "~bootstrap/scss/bootstrap";
 
 * {
-    color: $custom-dark !important;
-    font-family: $main-font;
+    color: $custom-light !important;
+    font-family: $extra-font;
 }
 
 html, body {
-    background-color: $custom-light;
+    background-color: $custom-dark;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
 }
 
 #navbar {
@@ -31,14 +37,16 @@ nav > a {
     font-family: $title-font;
     font-size: 3rem !important;
     color: $custom-ter !important;
+    text-shadow: 5px 5px 5px $custom-dark;
 }
 
 .card {
     background-color: $custom-prim !important;
 }
 
-.card-custom {
-    background-color: $custom-light !important;
+.custom-card {
+    background-color: $custom-sec !important;
+    color: $custom-dark !important;
 }
 
 .custom-btn {
@@ -53,6 +61,14 @@ nav > a {
     color: $custom-light !important;
 }
 
+.highlight {
+    color: $custom-ter !important;
+}
+
+.dark  {
+    color: $custom-dark !important;
+}
+
 .form {
     max-width: 34rem;
     margin: auto;
@@ -64,4 +80,26 @@ nav > a {
     border-radius: 10%;
     height: 3rem;
     font-size: large;
+}
+
+#footer {
+    background-color: $custom-prim !important;
+}
+
+.content {
+    flex-grow: 1;
+}
+
+.custom-title {
+    font-family: $title-font;
+    font-size: 3rem !important;
+    color: $custom-ter !important;
+    text-shadow: 3px 3px 3px $custom-dark;
+}
+
+.custom-title-dark {
+    font-family: $title-font;
+    font-size: 3rem !important;
+    color: $custom-dark !important;
+    text-shadow: 3px 3px 3px $custom-sec !important;
 }

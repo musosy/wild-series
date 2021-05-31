@@ -12,8 +12,9 @@
   </head>
   <body>
     {% include '_navbar.html.twig' %}
-    <div class="container-fluid p-5">
+    <div class="container-fluid p-5 content">
       {% block body %}{% endblock %}
     </div>
+    {% include "_footer.html.twig" %}
   </body>
 </html>
