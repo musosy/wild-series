@@ -1,27 +1,31 @@
 {% extends "base.html.twig" %}
 {% block title %}
-Show
+{{ program.title }}
 {% endblock %}
 {% block body %}
-<div class="media">
-  <img class="align-self-start mr-3" src="{{program.poster}}" alt="{{ program.title }} poster">
-  <div class="media-body">
-    <h1 class="mt-0">{{ program.title }}</h1>
-    <p>{{ program.summary }}</p>
-    <p>Catégorie : {{ program.category.name }}</p>
+<div class="container">
+  <div class="card mb-3" style="max-width: 90vw;">
+    <div class="row g-0">
+      <div class="col-lg-6 text-center align-self-center">
+        <img src="{{program.poster}}" alt="{{ program.title }} poster" style="max-width: 80%;">
+      </div>
+      <div class="col-lg-6">
+        <div class="card-body">
+          <h1 class="card-title light">{{ program.title }}</h5>
+          <p class="card-text light">{{ program.summary }}</p>
+          <div class="d-flex justify-content-evenly flex-wrap">
+            {% for season in seasons %}
+            {% include "program/_season.html.twig" %}
+            {% else %}
+            Aucune saison trouvée ...
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
-<div class="container d-flex justify-content-evenly">
-  {% for season in seasons %}
-  <div>
-    <h2>Season #{{ season.number }}</h2>
-    <p>{{ season.description }}</p>
-    <a href="{{ path('program_season_show', {id: program.id, seasonId: season.id}) }}">Voir les épisodes de la saison</a>
-  </div>
-  {% else %}
-  Aucune saison trouvée ...
-  {% endfor %}
-</div>
+
 <a href="{{ path('program_index') }}">
     Retour à la liste des programmes
 </a>

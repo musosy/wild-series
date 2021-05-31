@@ -1,0 +1,7 @@
+<div class="card my-2 mx-2" style="min-width: 12rem;">
+    <div class="card-body">
+        <h4 class="light">#{{episode.number}} - {{episode.title}}</h4>
+        <p class="card-text light" style="max-height: 6rem; overflow:hidden">{{ episode.synopsis }}</p>
+        <a class="btn btn-primary custom-btn" href="{{ path('program_episode_show', {program: program.id, season: season.id, episode: episode.id}) }}">Voir la fiche</a>
+    </div>
+</div>

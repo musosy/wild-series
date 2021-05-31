@@ -32,3 +32,36 @@ nav > a {
     font-size: 3rem !important;
     color: $custom-ter !important;
 }
+
+.card {
+    background-color: $custom-prim !important;
+}
+
+.card-custom {
+    background-color: $custom-light !important;
+}
+
+.custom-btn {
+    font-size: large;
+    background-color: $custom-ter;
+    border-color: $custom-sec;
+    color: $custom-sec !important;
+    text-shadow: 1px 1px 2px $custom-prim;
+}
+
+.light {
+    color: $custom-light !important;
+}
+
+.form {
+    max-width: 34rem;
+    margin: auto;
+    background-color: $custom-prim;
+    border: 2px solid $custom-dark;
+}
+
+.form-select {
+    border-radius: 10%;
+    height: 3rem;
+    font-size: large;
+}
