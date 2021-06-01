@@ -1,10 +1,7 @@
-<div class="card my-2" style="width: 24rem; height: 20rem">
-    <div class="card-body">
-      <div class="mb-5" style="height: 4rem;">
-        <h2 class="card-title light">{{ loop.index }} - {{ program.title }}</h2>
-        <a class="card-text light" style="text-decoration: none;" href="{{ path('category_show', {name: program.category.name})}}"><small>{{ program.category.name }}</small></a>
-      </div>
-        <p class="card-text light" style="height: 6rem; overflow:hidden; text-overflow: ellipsis">{{ program.summary }}</p>
-      <a class="btn btn-primary custom-btn" href="{{ path('program_show', {program: program.id}) }}">Voir la fiche</a>
-    </div>
-</div>
+<a href="{{ path('program_show', {program: program.id}) }}" class="btn custom-card card-program-small my-3">
+  <h1 class="custom-title-dark small text-center">
+    {{ program.title }}
+  </h1>
+  <p class="dark">{{ program.seasons|length }} saisons</p>
+  <p class="text-start">{{ program.summary }}</p>
+</a>

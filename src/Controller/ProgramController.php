@@ -10,6 +10,7 @@ use App\Entity\Program;
 use App\Entity\Season;
 use App\Entity\Episode;
 use App\Form\ProgramType;
+use App\Service\EpisodePicker;
 
 /**
  * @Route("/programs", name="program_")
@@ -63,58 +64,39 @@ class ProgramController extends AbstractController
      */
     public function show(Program $program): Response
     {
-        $seasons = $program->getSeasons();
         return $this->render(
             'program/show.html.twig',
             [
             'program' => $program,
-            'seasons' => $seasons
         ]);
     }
     
     /**
      * Get a specific season of a program
      * 
-     * @Route("/{program<^[0-9]+$>}/season/{season<^[0-9]+$>}", methods={"GET"}, name="season_show")
+     * @Route("/season/{season<^[0-9]+$>}", methods={"GET"}, name="season_show")
      * @return Response
      */
-    public function showSeason(Program $program, Season $season)
+    public function showSeason(Season $season)
     {
-        $episodes = $season->getEpisodes();
         return $this->render('program/season_show.html.twig', [
-            'program' => $program,
             'season' => $season,
-            'episodes' => $episodes
         ]);
     }
 
     /**
      * Get a specific episode of a program
      * 
-     * @Route("/{program<^[0-9]+$>}/season/{season<^[0-9]+$>}/episode/{episode<^[0-9]+$>}", methods={"GET"}, name="episode_show")
+     * @Route("/season/episode/{episode<^[0-9]+$>}", methods={"GET"}, name="episode_show")
      * @return Response
      */
-    public function showEpisode(Program $program, Season $season, Episode $episode)
+    public function showEpisode(Episode $episode)
     {
-        $prev = null;
-        if ($episode->getId() - 1 > 0) {
-            $prev = $this->getDoctrine()
-                ->getRepository(Episode::class)
-                ->findOneBy([
-                    'id' => ($episode->getId() - 1)
-                ]);
-        }
-        $next = $this->getDoctrine()
-            ->getRepository(Episode::class)
-            ->findOneBy([
-                'id' => ($episode->getId() + 1)
-            ]);
         return $this->render('program/episode_show.html.twig', [
-            'program' => $program,
-            'season' => $season,
             'episode' => $episode,
-            'prev' => $prev,
-            'next' => $next
+            'prev' => EpisodePicker::getPrevEpisode($episode, $this->getDoctrine()),
+            'next' => EpisodePicker::getNextEpisode($episode, $this->getDoctrine()),
+            'extra' => EpisodePicker::getRandomEpisode($episode, $this->getDoctrine()),
         ]);
     }
 }

@@ -1,23 +1,30 @@
 {% extends "base.html.twig" %}
 {% block title %}
-{{ program.title }} - Season #{{ season.number }} - {{ episode.title }}
+{{ episode.season.program.title }} - Season {{ episode.season.number }} - {{ episode.title }}
 {% endblock %}
 {% block body %}
-<div class="card my-2 mx-2" style="max-width:90vw;margin:auto">
-    <div class="card-body">
-        <h4 class="light">#{{episode.number}} - {{episode.title}}</h4>
-        <p class="card-text light">{{ episode.synopsis }}</p>
-        <div class="d-flex justify-content-evenly flex-wrap mt-3">
-            {% if prev is not null %}
-            <a class="btn btn-primary custom-btn" href="{{ path('program_episode_show', {program: prev.season.program.id, season: prev.season.id, episode: prev.id}) }}">{{ prev.season.program.title }} - Saison #{{prev.season.number}} - {{prev.title}}</a>
-            {% endif %}
-            {% if next is not null %}
-            <a class="btn btn-primary custom-btn" href="{{ path('program_episode_show', {program: next.season.program.id, season: next.season.id, episode: next.id}) }}">{{ next.season.program.title }} - Saison #{{next.season.number}} - {{next.title}}</a>
-            {% endif %}
-        </div>
+<div class="simple-card">
+    <h1 class="custom-title-dark text-center big">{{ episode.season.program.title }}</h1>
+    <h3 class="highlight medium text-center">Saison {{ episode.season.number }}</h3>
+</div>
+<div class="card-episode mt-5">
+    <h1 class="custom-title-dark medium text-center">{{episode.number}} - {{episode.title}}</h1>
+    <p class="card-text light ms-5">{{ episode.synopsis }}</p>
+    <div class="d-flex justify-content-evenly flex-wrap mt-3 pb-3">
+        {% if prev is not null %}
+        <a class="btn custom-btn-dark dark" href="{{ path('program_episode_show', { episode: prev.id}) }}">{{ prev.season.program.title }} - Saison {{prev.season.number}} - {{prev.title}}</a>
+        {% endif %}
+        {% if next is not null %}
+        <a class="btn custom-btn-dark dark" href="{{ path('program_episode_show', { episode: next.id}) }}">{{ next.season.program.title }} - Saison {{next.season.number}} - {{next.title}}</a>
+        {% endif %}
     </div>
 </div>
-<a href="{{ path('program_season_show',{program: program.id, season: season.id}) }}">
-    Retour à la liste des épisodes
-</a>
+<div class="container d-flex flex-column align-items-center mt-5">
+    <h3 class="custom-title medium">Episode aléatoire</h3>
+    <a class="btn custom-btn-dark mt-3 mb-5" href="{{ path('program_episode_show', { episode: extra.id}) }}">{{ extra.season.program.title }} - Saison {{extra.season.number}} - {{extra.title}}</a>
+    <a href="{{ path('program_season_show',{ season: episode.season.id}) }}">
+        Retour à la liste des épisodes
+    </a>
+</div>
+
 {% endblock %}

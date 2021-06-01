@@ -1,21 +1,31 @@
 {% extends "base.html.twig" %}
 {% block title %}
-{{program.title}} - Saison {{season.number}}
+{{season.program.title}} - Saison {{season.number}}
 {% endblock %}
 {% block body %}
-<div class="media text-center">
-    <div class="card" style="max-width:48rem; margin: auto">
-        <h1 class="light">{{program.title}}</h1>
-        <h3 class="light">Saison {{season.number}}</h3>
-        <p class="light">{{ season.description }}</p>
+<div class="container-fluid text-center">
+    <div class="card-resume-episode">
+        <h1 class="custom-title-dark medium">{{season.program.title}}</h1>
+        <h3 class="highlight">Saison {{season.number}}</h3>
+        <p>{{ season.description }}</p>
+        <div class="d-flex justify-content-evenly flex-wrap">
+            <div class="d-flex justify-content-between flex-wrap">
+                {% for otherSn in season.program.seasons|filter(otherSn => otherSn != season) %}
+                {% set season = otherSn %}
+                {% include "program/_season.html.twig" %}
+                {% else %}
+                Aucune saison trouvée ...
+                {% endfor %}
+              </div>
+        </div>
     </div>
-    <div class="d-flex justify-content-evenly flex-wrap">
-        {% for episode in episodes %}
+    <div class="d-flex justify-content-evenly flex-wrap mt-5">
+        {% for episode in season.episodes %}
         {% include "program/_episode.html.twig" %}
         {% endfor %}
     </div>
 </div>
-<a href="{{ path('program_show', {program: program.id}) }}">
+<a href="{{ path('program_show', {program: season.program.id}) }}">
     Retour à la fiche de la série
 </a>
 {% endblock %}

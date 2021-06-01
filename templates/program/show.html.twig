@@ -3,29 +3,34 @@
 {{ program.title }}
 {% endblock %}
 {% block body %}
-<div class="container">
-  <div class="card mb-3 p-3" style="max-width: 90vw;">
-    <div class="row g-0">
-      <div class="col-lg-6 text-center align-self-center">
-        <img src="{{program.poster}}" alt="{{ program.title }} poster" style="max-width: 80%;">
-      </div>
-      <div class="col-lg-6">
-        <div class="card-body">
-          <h1 class="custom-title-dark">{{ program.title }}</h5>
-          <p class="card-text light">{{ program.summary }}</p>
-          <div class="d-flex justify-content-evenly flex-wrap">
-            {% for season in seasons %}
-            {% include "program/_season.html.twig" %}
-            {% else %}
-            Aucune saison trouvée ...
-            {% endfor %}
-          </div>
-        </div>
+<div class="container-fluid">
+  <div class="card-program-large">
+    <div>
+      <img class="card-program-large-img" src="{{program.poster}}" alt="{{ program.title }} poster">
+    </div>
+    <div class="mt-2">
+      <h1 class="custom-title-dark medium text-center">{{ program.title }}</h1>
+      <p class="ms-3 x-small mt-3">{{ program.summary }}</p>
+      <div class="d-flex justify-content-evenly flex-wrap">
+        {% for season in program.seasons %}
+        {% include "program/_season.html.twig" %}
+        {% else %}
+        Aucune saison trouvée ...
+        {% endfor %}
       </div>
     </div>
   </div>
-</div>
+  <h1 class="custom-title-sec medium text-center mt-5 mb-2">Other related programs</h1>
+  <div class="d-flex justify-content-evenly flex-wrap">
 
+    {% for otherPrg in program.category.programs|filter(prg => prg != program)|slice(0, 3) %}
+    {% set program = otherPrg %}
+    {% include "program/_program.html.twig" %}
+    {% endfor %}
+  </div>
+    
+</div>
+</div>
 <a href="{{ path('program_index') }}">
     Retour à la liste des programmes
 </a>

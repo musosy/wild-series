@@ -1,6 +1,8 @@
-<div class="card my-2" style="width: 18rem;">
-    <div class="card-body text-center">
-      <h2 class="card-title light">{{ loop.index }} - {{ category.name }} </h2>
-      <a class="btn btn-primary custom-btn" href="{{ path('category_show', {name: category.name}) }}">Voir les séries.</a>
-    </div>
-</div>
+<a class="btn btn-primary custom-card my-3" href="{{ path('category_show', {name: category.name}) }}">
+  <p class="custom-title-dark medium">{{ category.name }} </p>
+  {% if category.programs|length != 0 %}
+  <p>Séries disponobiles {{ category.programs|length }}</p>
+  {% else %}
+  <p>Pas de série disponible</p>
+  {% endif %}
+</a>

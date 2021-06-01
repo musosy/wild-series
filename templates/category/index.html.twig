@@ -3,7 +3,7 @@
 Categories
 {% endblock %}
 {% block body %}
-<h1 class="custom-title text-center mb-5">Toutes les catégorie proposées : </h1>
+<h1 class="custom-title big text-center mb-5">Toutes les catégorie proposées : </h1>
 <div class="d-flex justify-content-evenly flex-wrap">
 
     {% for category in categories %}
@@ -12,14 +12,16 @@ Categories
     Aucune catégorie trouvée.
     {% endfor %}
 </div>
-<div class="d-flex justify-content-evenly">
-
-    <a href="{{ path('app_index') }}">
+<div class="row mt-5">
+    <div class="col-2"></div>
+    <a class="col-3 btn custom-btn-dark" href="{{ path('app_index') }}">
         Retour à l'accueil
     </a>
-    <a href="{{ path('category_new') }}">
+    <div class="col-2"></div>
+    <a class="col-3 btn custom-btn-dark" href="{{ path('category_new') }}">
         Ajouter une catégorie
     </a>
+    <div class="col-2"></div>
 </div>
     
 {% endblock %}

@@ -1,8 +1,4 @@
-<div class="card custom-card my-2 mx-1" style="min-width: 12rem;">
-    <div class="card-body dark">
-        <h4 class="dark">Season #{{ season.number }}</h4>
-        <p class="dark" style="max-height: 6rem; overflow:hidden">{{ season.description }}</p>
-        <a class="btn btn-primary custom-btn text-center"  href="{{ path('program_season_show', { program: program.id, season: season.id }) }}">Voir la fiche</a>
-    </div>
-</div>
-
+<a class="btn custom-btn-dark text-center my-3 mx-2"  href="{{ path('program_season_show', { season: season.id }) }}">
+    <h1 class="light small">Season {{ season.number }}</h1>
+    <p class="light">{{ season.episodes|length }} épisodes</p>
+</a>

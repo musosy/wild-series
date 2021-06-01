@@ -64,17 +64,8 @@ class CategoryController extends AbstractController
                 'No susch category found in category\'s table.'
             );
         }
-        $programs = $this->getDoctrine()
-            ->getRepository(Program::class)
-            ->findByCategory($category->getId());
-        if (!$programs) {
-            throw $this->createNotFoundException(
-                'No programs found in this category.'
-            );
-        }
         return $this->render('category/show.html.twig', [
             'category' => $category,
-            'programs' => $programs
         ]);
     }
 

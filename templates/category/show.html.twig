@@ -3,15 +3,15 @@
 {{ category.name }}
 {% endblock %}
 {% block body %}
-<h1>Toutes les séries de la catégory {{ category.name }} : </h1>
+<h1 class="custom-title medium text-center mb-3">Toutes les séries de la catégory {{ category.name }} : </h1>
 <div class="d-flex justify-content-evenly flex-wrap">
-{% for program in programs %}
+{% for program in category.programs %}
         {% include "program/_program.html.twig" %}
     {% else %}
         Aucune série trouvée.
     {% endfor %}
 </div>
-    <a href="{{ path('category_index') }}">
-        Retour à la liste des catégories
-    </a>
+<a href="{{ path('category_index') }}">
+    Retour à la liste des catégories
+</a>
 {% endblock %}
