@@ -163,6 +163,17 @@ nav > a {
 }
 //End
 
+//Form styling
+
+input, select, textarea{
+    color: $custom-prim;
+}
+
+textarea:focus, input:focus {
+    color: $custom-prim;
+}
+
+//End
 //Custom font size and font color
 .big {
     font-size: 5rem;

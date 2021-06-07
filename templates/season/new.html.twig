@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Saison - Nouvelle{% endblock %}
+
+{% block body %}
+    <h1 class="custom-title text-center mb-5">Ajouter une nouvelle saison</h1>
+    {{ form_start(form, {'method': 'POST'}) }}
+    <div class="row mb-3">
+        <h3 class="text-center">{{ form_label(form.number, 'Numéro de la saison', {'label_attr': {'class': 'form-label '}}) }}</h3>
+        {{ form_widget(form.number, {'attr': {'class': 'form-control', 'style': 'max-width:28rem; margin:auto', 'min': '1'}}) }}
+    </div>
+    <div class="row mb-3">
+        <h3 class="text-center">{{ form_label(form.year, 'Année', {'label_attr': {'class': 'form-label '}}) }}</h3>
+        {{ form_widget(form.year, {'attr': {'class': 'form-control', 'style': 'max-width:28rem; margin:auto', 'min': '1900'}}) }}
+    </div>
+    <div class="row mb-3">
+        <h3 class="text-center">{{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label '}}) }}</h3>
+        {{ form_widget(form.description, {'attr': {'class': 'form-control', 'style': 'max-width:28rem; margin:auto'}}) }}
+    </div>
+    <div class="row mb-3">
+        <h3 class="text-center">{{ form_label(form.program, 'Programme de la saison', {'label_attr': {'class': 'form-label '}}) }}</h3>
+        {{ form_widget(form.program, {'attr': {'class': 'form-control', 'style': 'max-width:28rem; margin:auto'}}) }}
+    </div>
+    <input class="btn custom-btn-dark mb-3" type="submit"  value="Ajouter une saison">
+    {{ form_end(form) }}
+    <a href="{{ path('season_index') }}">back to list</a>
+{% endblock %}
+{# {% block title %}
+Programme - Nouveau
+{% endblock %}
+{% block body %}
+<div class="form text-center p-5">
+    {{ form_start(form, {'method': 'POST'}) }}
+    <div class="row">
+        <h3>{{ form_label(form.title, 'Titre de la série', {'label_attr': {'class': 'form-label light'}}) }}</h3>
+        {{ form_widget(form.title, {'attr': {'class': 'form-control', 'style': 'max-width:28rem; margin:auto'}}) }}
+    </div>
+    <div class="row mt-3">
+        <h3>{{ form_label(form.summary, 'Résumé', {'label_attr': {'class': 'form-label light'}}) }}</h3>
+        {{ form_widget(form.summary, {'attr': {'class': 'form-control', 'style': 'max-width:28rem; margin:auto'}}) }}
+    </div>
+    <div class="row mt-3">
+        <h3>{{ form_label(form.poster, 'Affiche', {'label_attr': {'class': 'form-label light'}}) }}</h3>
+        {{ form_widget(form.poster, {'attr': {'class': 'form-control', 'style': 'max-width:28rem; margin:auto'}}) }}
+    </div>
+    <div class="row mt-3">
+        <h3>{{ form_label(form.category, 'Catégorie de la série', {'label_attr': {'class': 'form-label light'}}) }}</h3>
+        {{ form_widget(form.category, {'attr': {'class': 'form-select', 'style': 'max-width:28rem; margin:auto'}}) }}
+    </div>
+    <input class="btn btn-primary custom-btn mt-3" type="submit" value="Ajouter un program">
+    {{ form_end(form) }}
+</div>
+{% endblock %} #}

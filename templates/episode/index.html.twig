@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Episode - Liste{% endblock %}
+
+{% block body %}
+    <h1 class="custom-title text-center mb-5">Liste des épisodes</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Titre</th>
+                <th>Numéro</th>
+                <th>Synopsis</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for episode in episodes %}
+            <tr>
+                <td>{{ episode.id }}</td>
+                <td>{{ episode.title }}</td>
+                <td>{{ episode.number }}</td>
+                <td>{{ episode.synopsis }}</td>
+                <td>
+                    <a class="btn custom-btn-dark" href="{{ path('episode_show', {'id': episode.id}) }}">Voir</a>
+                    <a class="btn custom-btn-dark" href="{{ path('episode_edit', {'id': episode.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun épisode trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a class="btn custom-btn-dark" href="{{ path('episode_new') }}">Nouvel épisode</a>
+{% endblock %}
