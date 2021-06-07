@@ -4,10 +4,11 @@ Catégorie - Nouvelle
 {% endblock %}
 {% block body %}
 <div class="form text-center p-5">
-    {{ form_start(form, {'method': 'POST'}) }}
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'method': 'POST'}}) }}
     <div class="row">
-        <h3>{{ form_label(form.name, 'Nom de la nouvelle catégorie', {'label_attr': {'class': 'form-label light'}}) }}</h3>
-        {{ form_widget(form.name, {'attr': {'class': 'form-control', 'style': 'max-width:28rem; margin:auto'}}) }}
+        <h3>Nom de la catégorie</h3>
+        <div class="text-start">{{ form_errors(form.name) }}</div>
+        <div>{{ form_widget(form.name) }}</div>
     </div>
     <input class="btn custom-btn-dark mt-3" type="submit" value="Ajouter une catégorie">
     {{ form_end(form) }}

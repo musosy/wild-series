@@ -1,8 +1,8 @@
 $custom-prim: #19647E;
 $custom-sec: #28AFB0;
 $custom-ter: #FFFC31;
-$custom-light: #F6F7EB;
-$custom-dark: #37392E;
+$custom-light: #e3e4db;
+$custom-dark: #2a2b23;
 
 $title-font: 'Lobster', cursive;
 $main-font: Verdana;
@@ -12,7 +12,7 @@ $extra-font: 'Open Sans Condensed', sans-serif;
 @import "~bootstrap/scss/bootstrap";
 
 * {
-    color: $custom-light !important;
+    color: $custom-light;
     font-family: $extra-font;
 }
 
@@ -29,7 +29,7 @@ body {
 #navbar {
     height: 5rem;
     background-color: $custom-prim !important;
-    
+    color: $custom-light !important;
     font-size: 1.5rem;
 }
 
@@ -40,10 +40,14 @@ nav > a {
     text-shadow: 5px 5px 5px $custom-dark;
 }
 
+.nav-link {
+    color: $custom-light !important;
+}
 
 .form {
     max-width: 34rem;
     margin: auto;
+    color: $custom-dark;
     background-color: $custom-prim;
     border: 2px solid $custom-dark;
 }
@@ -52,6 +56,10 @@ nav > a {
     border-radius: 10%;
     height: 3rem;
     font-size: large;
+}
+
+.form-error-icon, .form-error-message {
+    color: $custom-light !important;
 }
 
 #footer {
@@ -89,14 +97,14 @@ nav > a {
 .custom-btn-dark {
     background-color: $custom-dark;
     border-color: $custom-light;
-    color: $custom-sec;
+    color: $custom-light;
     text-shadow: 1px 1px 2px $custom-prim;
 }
 
 .custom-btn-dark:hover {
     background-color: $custom-sec;
     border-color: $custom-light;
-    color: $custom-sec;
+    color: $custom-light;
     text-shadow: 1px 1px 2px $custom-prim;
 }
 
@@ -117,7 +125,7 @@ nav > a {
     width: 25rem;
     height: 25rem;
     display: grid !important;
-    grid-template-rows: 3fr 1fr 6fr !important;
+    grid-template-rows: 3fr 1fr 6fr;
 } 
 
 .card-program-large {
@@ -163,17 +171,6 @@ nav > a {
 }
 //End
 
-//Form styling
-
-input, select, textarea{
-    color: $custom-prim;
-}
-
-textarea:focus, input:focus {
-    color: $custom-prim;
-}
-
-//End
 //Custom font size and font color
 .big {
     font-size: 5rem;
