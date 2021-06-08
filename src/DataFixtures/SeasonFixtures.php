@@ -13,9 +13,9 @@ class SeasonFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         $programs = [];
-        $i = 1;
-        while ($this->hasReference('program' .$i)) {
-            $programs[] = $this->getReference('program' .$i);
+        $i = 0;
+        while ($this->hasReference('program_' .$i)) {
+            $programs[] = $this->getReference('program_' .$i);
             $i++;
         }
         $seasonCounter = 1;
@@ -26,10 +26,25 @@ class SeasonFixtures extends Fixture implements DependentFixtureInterface
                 $season->setYear($j+2010);
                 $season->setDescription('Season #' .$j. ' description.');
                 $season->setProgram($program);
-                $this->addReference('season' .$seasonCounter, $season);
+                $this->addReference('season_' .$seasonCounter, $season);
                 $seasonCounter++;
                 $manager->persist($season);
             }
+        }
+        $i = 0;
+        $totalSn = 0;
+        while ($this->hasReference('programB_' . $i)) {
+            for ($j = 0; $j < 3; $j++) {
+                $season = new Season();
+                $season->setNumber($j+1);
+                $season->setYear($j+2010);
+                $season->setDescription('Season #' .($j+1). ' description.');
+                $season->setProgram($this->getReference('programB_' . $i));
+                $this->addReference('seasonB_' .$totalSn, $season);
+                $totalSn++;
+                $manager->persist($season);
+            }
+            $i++;
         }
         $manager->flush();   
     }

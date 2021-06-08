@@ -51,9 +51,27 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $program->setTitle($data['title']);
             $program->setSummary($data['description']);
             $program->setPoster($data['poster']);
-            $program->setCategory($this->getReference('category5'));
-            $this->addReference('program' .($key+1), $program);
+            $program->setCategory($this->getReference('category_4'));
+            if ($program->getTitle() == 'Walking Dead') {
+                $program->addActor($this->getReference('actor_0'));
+                $program->addActor($this->getReference('actor_1'));
+                $program->addActor($this->getReference('actor_2'));
+                $program->addActor($this->getReference('actor_3'));
+                $program->addActor($this->getReference('actor_4'));
+            }
             $manager->persist($program);
+            $this->addReference('program_' .$key, $program);
+        }
+        for ($i = 0; $i < 4; $i++) {
+            for ($j = 0; $j < 10; $j++) {
+                $program = new Program();
+                $program->setTitle('testPrg_' . (10*$i+$j));
+                $program->setSummary('testSmr_' . (10*$i+$j));
+                $program->setPoster('testPst_' . (10*$i+$j));
+                $program->setCategory($this->getReference('category_' . $i));
+                $manager->persist($program);
+                $this->addReference('programB_' .(10*$i+$j), $program);
+            }
         }
         $manager->flush();
     }
@@ -62,6 +80,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
     {
         return [
             CategoryFixtures::class,
+            ActorFixtures::class,
         ];
     }
 }
