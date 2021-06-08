@@ -1,0 +1,10 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acteurs - Liste{% endblock %}
+
+{% block body %}
+{% for actor in actors %}
+    <a class="btn custom-btn-dark" href="{{ path('actor_show', { actor: actor.id }) }}">Voir les programmes de {{ actor.name }}</a>
+{% endfor %}
+{% endblock body %}
+

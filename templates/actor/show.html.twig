@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Acteurs - Détails{% endblock %}
+
+{% block body %}
+<h1 class="text-center custom-title">
+    {{ actor.name}}
+</h1>
+<h3 class="text-center">Programmes:</h3>
+<div class="d-flex justify-content-evenly flex-wrap">
+    {% for program in actor.programs %}
+    {% include "program/_program.html.twig" %}
+    {% endfor %}
+</div>
+{% endblock body %}
