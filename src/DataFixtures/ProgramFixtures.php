@@ -2,12 +2,11 @@
 
 namespace App\DataFixtures;
 
-use App\Controller\CategoryController;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use App\Entity\Program;
-use App\Entity\Category;
 use App\DataFixtures\CategoryFixtures;
+use App\Service\Slugify;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
 class ProgramFixtures extends Fixture implements DependentFixtureInterface
@@ -46,6 +45,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
                 'poster' => "https://m.media-amazon.com/images/M/MV5BYWNmY2Y1NTgtYTExMS00NGUxLWIxYWQtMjU4MjNkZjZlZjQ3XkEyXkFqcGdeQXVyMzQ2MDI5NjU@._V1_SY1000_CR0,0,666,1000_AL_.jpg",
             ]
         ];
+        $slugify = new Slugify();
         foreach ($programs as $key => $data) {
             $program = new Program();
             $program->setTitle($data['title']);
@@ -59,20 +59,33 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
                 $program->addActor($this->getReference('actor_3'));
                 $program->addActor($this->getReference('actor_4'));
             }
+            $slug = $slugify->generate($program->getTitle());
+            $program->setSlug($slug);
             $manager->persist($program);
-            $this->addReference('program_' .$key, $program);
+            $this->addReference('program_' . $key, $program);
         }
         for ($i = 0; $i < 4; $i++) {
             for ($j = 0; $j < 10; $j++) {
                 $program = new Program();
-                $program->setTitle('testPrg_' . (10*$i+$j));
-                $program->setSummary('testSmr_' . (10*$i+$j));
-                $program->setPoster('testPst_' . (10*$i+$j));
+                $program->setTitle('testPrg_' . (10 * $i + $j));
+                $program->setSummary('testSmr_' . (10 * $i + $j));
+                $program->setPoster('testPst_' . (10 * $i + $j));
                 $program->setCategory($this->getReference('category_' . $i));
+                $slug = $slugify->generate($program->getTitle());
+                $program->setSlug($slug);
                 $manager->persist($program);
-                $this->addReference('programB_' .(10*$i+$j), $program);
+                $this->addReference('programB_' . (10 * $i + $j), $program);
             }
         }
+        $slugify = new Slugify();
+        $testPrg = new Program();
+        $testPrg->setTitle('ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðñòóôõöùúûüýÿ;-\'--__?;([')
+            ->setSummary('test')
+            ->setPoster('test')
+            ->setCategory($this->getReference('category_4'))
+            ->setSlug($slugify->generate($testPrg->getTitle()))
+        ;
+        $manager->persist($testPrg);
         $manager->flush();
     }
 

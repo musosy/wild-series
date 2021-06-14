@@ -11,6 +11,8 @@ use App\Entity\Season;
 use App\Entity\Episode;
 use App\Form\ProgramType;
 use App\Service\EpisodePicker;
+use App\Service\Slugify;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 
 /**
  * @Route("/programs", name="program_")
@@ -40,13 +42,15 @@ class ProgramController extends AbstractController
     /**
      * @Route("/new", name="new")
      */
-    public function new(Request $request): Response
+    public function new(Request $request, Slugify $slugify): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager = $this->getDoctrine()->getManager();
+            $slug = $slugify->generate($program->getTitle());
+            $program->setSlug($slug);
             $entityManager->persist($program);
             $entityManager->flush();
             return $this->redirectToRoute('program_index');
@@ -57,9 +61,10 @@ class ProgramController extends AbstractController
     }
 
     /**
-     * Getting a program by id
+     * Getting a program by slug
      * 
-     * @Route("/{program<^[0-9]+$>}", methods={"GET"}, name="show")
+     * @Route("/{program}", methods={"GET"}, name="show")
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"}})
      * @return Response
      */
     public function show(Program $program): Response
@@ -87,16 +92,17 @@ class ProgramController extends AbstractController
     /**
      * Get a specific episode of a program
      * 
-     * @Route("/season/episode/{episode<^[0-9]+$>}", methods={"GET"}, name="episode_show")
+     * @Route("/season/episode/{episode}", methods={"GET"}, name="episode_show")
+     * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episode": "slug"}})
      * @return Response
      */
-    public function showEpisode(Episode $episode)
+    public function showEpisode(Episode $episode, EpisodePicker $epPick)
     {
         return $this->render('program/episode_show.html.twig', [
             'episode' => $episode,
-            'prev' => EpisodePicker::getPrevEpisode($episode, $this->getDoctrine()),
-            'next' => EpisodePicker::getNextEpisode($episode, $this->getDoctrine()),
-            'extra' => EpisodePicker::getRandomEpisode($episode, $this->getDoctrine()),
+            'prev' => $epPick->getPrevEpisode($episode, $this->getDoctrine()),
+            'next' => $epPick->getNextEpisode($episode, $this->getDoctrine()),
+            'extra' => $epPick->getRandomEpisode($episode, $this->getDoctrine()),
         ]);
     }
 

@@ -1,4 +1,4 @@
-<a class="btn custom-card my-3" href="{{ path('program_episode_show', { episode: episode.id}) }}">
+<a class="btn custom-card my-3" href="{{ path('program_episode_show', { episode: episode.slug}) }}">
     <h1 class="custom-title-dark small">{{episode.number}} - {{episode.title}}</h1>
     <p style="max-height: 6rem; overflow:hidden">{{ episode.synopsis }}</p>
 </a>

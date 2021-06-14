@@ -2,10 +2,8 @@
 
 namespace App\Service;
 
-use Doctrine\ORM\EntityManager;
+
 use App\Entity\Episode;
-use App\Entity\Season;
-use App\Entity\Program;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class EpisodePicker extends AbstractController

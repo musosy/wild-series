@@ -25,7 +25,7 @@
         {% endfor %}
     </div>
 </div>
-<a href="{{ path('program_show', {program: season.program.id}) }}">
+<a href="{{ path('program_show', {program: season.program.slug}) }}">
     Retour à la fiche de la série
 </a>
 {% endblock %}
