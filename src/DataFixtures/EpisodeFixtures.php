@@ -16,7 +16,7 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
     {
         $i = 0;
         while ($this->hasReference('season_' . $i)) {
-            for ($j = 1; $j <= 10; $j++) {
+            for ($j = 1; $j <= 5; $j++) {
                 $slugify = new Slugify();
                 $episode = new Episode();
                 $episode->setTitle('Episode ' .$j. ' title.');
@@ -30,7 +30,7 @@ class EpisodeFixtures extends Fixture implements DependentFixtureInterface
         }
         $i = 0;
         while ($this->hasReference('seasonB_' . $i)) {
-            for ($j = 1; $j <= 10; $j++) {
+            for ($j = 1; $j <= 5; $j++) {
                 $slugify = new Slugify();
                 $episode = new Episode();
                 $episode->setTitle('Episode ' .$j. ' title.');
