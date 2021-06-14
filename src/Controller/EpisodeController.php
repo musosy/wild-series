@@ -10,8 +10,9 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
-
+use Symfony\Component\Mime\Email;
 /**
  * @Route("/episode")
  */
@@ -30,7 +31,7 @@ class EpisodeController extends AbstractController
     /**
      * @Route("/new", name="episode_new", methods={"GET","POST"})
      */
-    public function new(Request $request, Slugify $slugify): Response
+    public function new(Request $request, Slugify $slugify, MailerInterface $mailer): Response
     {
         $episode = new Episode();
         $form = $this->createForm(EpisodeType::class, $episode);
@@ -41,6 +42,12 @@ class EpisodeController extends AbstractController
             $episode->setSlug((new Slugify())->generate($episode->getTitle()));
             $entityManager->persist($episode);
             $entityManager->flush();
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to($this->getParameter('mailer_to'))
+                ->subject('Nouvel épisode publié');
+            $email->html($this->renderView('Program/newEmail.html.twig', ['episode' => $episode, 'email' => $email]));
+            $mailer->send($email);
 
             return $this->redirectToRoute('episode_index');
         }

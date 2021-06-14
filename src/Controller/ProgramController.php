@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace App\Controller;
 
@@ -13,6 +13,8 @@ use App\Form\ProgramType;
 use App\Service\EpisodePicker;
 use App\Service\Slugify;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
 /**
  * @Route("/programs", name="program_")
@@ -42,7 +44,7 @@ class ProgramController extends AbstractController
     /**
      * @Route("/new", name="new")
      */
-    public function new(Request $request, Slugify $slugify): Response
+    public function new(Request $request, Slugify $slugify, MailerInterface $mailer): Response
     {
         $program = new Program();
         $form = $this->createForm(ProgramType::class, $program);
@@ -53,6 +55,14 @@ class ProgramController extends AbstractController
             $program->setSlug($slug);
             $entityManager->persist($program);
             $entityManager->flush();
+
+            $email = (new Email())
+                ->from($this->getParameter('mailer_from'))
+                ->to($this->getParameter('mailer_to'))
+                ->subject('Nouvelle série publiée');
+            $email->html($this->renderView('Program/newEmail.html.twig', ['program' => $program, 'email' => $email]));
+            $mailer->send($email);
+
             return $this->redirectToRoute('program_index');
         }
         return $this->render('program/new.html.twig', [
@@ -72,10 +82,11 @@ class ProgramController extends AbstractController
         return $this->render(
             'program/show.html.twig',
             [
-            'program' => $program,
-        ]);
+                'program' => $program,
+            ]
+        );
     }
-    
+
     /**
      * Get a specific season of a program
      * 
@@ -105,6 +116,4 @@ class ProgramController extends AbstractController
             'extra' => $epPick->getRandomEpisode($episode, $this->getDoctrine()),
         ]);
     }
-
-    
 }
