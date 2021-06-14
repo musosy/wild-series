@@ -12,24 +12,20 @@ class SeasonFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        $programs = [];
         $i = 0;
-        while ($this->hasReference('program_' .$i)) {
-            $programs[] = $this->getReference('program_' .$i);
-            $i++;
-        }
-        $seasonCounter = 1;
-        foreach ($programs as $key => $program) {
-            for ($j = 1; $j <= 3; $j++) {
+        $totalSn = 0;
+        while ($this->hasReference('program_' . $i)) {
+            for ($j = 0; $j < 3; $j++) {
                 $season = new Season();
-                $season->setNumber($j);
+                $season->setNumber($j+1);
                 $season->setYear($j+2010);
-                $season->setDescription('Season #' .$j. ' description.');
-                $season->setProgram($program);
-                $this->addReference('season_' .$seasonCounter, $season);
-                $seasonCounter++;
+                $season->setDescription('Season #' .($j+1). ' description.');
+                $season->setProgram($this->getReference('program_' . $i));
+                $this->addReference('season_' .$totalSn, $season);
+                $totalSn++;
                 $manager->persist($season);
             }
+            $i++;
         }
         $i = 0;
         $totalSn = 0;

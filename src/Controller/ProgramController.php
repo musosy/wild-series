@@ -90,12 +90,15 @@ class ProgramController extends AbstractController
     /**
      * Get a specific season of a program
      * 
-     * @Route("/season/{season<^[0-9]+$>}", methods={"GET"}, name="season_show")
+     * @Route("/{program}/{season}", methods={"GET"}, name="season_show")
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"}})
+     * @ParamConverter("season", class="App\Entity\Season", options={"mapping": {"season": "id"}})
      * @return Response
      */
-    public function showSeason(Season $season)
+    public function showSeason(Program $program, Season $season)
     {
         return $this->render('program/season_show.html.twig', [
+            'program' => $program,
             'season' => $season,
         ]);
     }
@@ -103,16 +106,18 @@ class ProgramController extends AbstractController
     /**
      * Get a specific episode of a program
      * 
-     * @Route("/season/episode/{episode}", methods={"GET"}, name="episode_show")
+     * @Route("/{program}/{season}/{episode}", methods={"GET"}, name="episode_show")
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"}})
+     * @ParamConverter("season", class="App\Entity\Season", options={"mapping": {"season": "id"}})
      * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episode": "slug"}})
      * @return Response
      */
-    public function showEpisode(Episode $episode, EpisodePicker $epPick)
+    public function showEpisode(Program $program, Season $season, Episode $episode, EpisodePicker $epPick)
     {
         return $this->render('program/episode_show.html.twig', [
+            'program' => $program,
+            'season' => $season,
             'episode' => $episode,
-            'prev' => $epPick->getPrevEpisode($episode, $this->getDoctrine()),
-            'next' => $epPick->getNextEpisode($episode, $this->getDoctrine()),
             'extra' => $epPick->getRandomEpisode($episode, $this->getDoctrine()),
         ]);
     }

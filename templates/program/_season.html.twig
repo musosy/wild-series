@@ -1,4 +1,4 @@
-<a class="btn custom-btn-dark text-center my-3 mx-2"  href="{{ path('program_season_show', { season: season.id }) }}">
+<a class="btn custom-btn-dark text-center my-3 mx-2"  href="{{ path('program_season_show', { program: program.slug, season: season.id }) }}">
     <h1 class="light small">Season {{ season.number }}</h1>
     <p class="light">{{ season.episodes|length }} épisodes</p>
 </a>
