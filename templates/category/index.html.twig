@@ -12,16 +12,15 @@ Categories
     Aucune catégorie trouvée.
     {% endfor %}
 </div>
-<div class="row mt-5">
-    <div class="col-2"></div>
-    <a class="col-3 btn custom-btn-dark" href="{{ path('app_index') }}">
+<div class="d-flex justify-content-evenly">
+    <a class="btn custom-btn-dark" href="{{ path('app_index') }}">
         Retour à l'accueil
     </a>
-    <div class="col-2"></div>
-    <a class="col-3 btn custom-btn-dark" href="{{ path('category_new') }}">
+    {% if app.user and "ROLE_ADMIN" in app.user.roles %}
+    <a class="btn custom-btn-dark" href="{{ path('category_new') }}">
         Ajouter une catégorie
     </a>
-    <div class="col-2"></div>
+    {% endif %}
 </div>
     
 {% endblock %}
