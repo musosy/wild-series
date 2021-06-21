@@ -133,7 +133,6 @@ class ProgramController extends AbstractController
             $entityManager->remove($comment);
             $entityManager->flush();
         }
-
         return $this->redirectToRoute('program_index');
     }
 
@@ -197,7 +196,7 @@ class ProgramController extends AbstractController
             'program' => $program,
             'season' => $season,
             'episode' => $episode,
-            'extra' => $epPick->getRandomEpisode($episode, $this->getDoctrine()),
+            'extra' => $epPick->getRandomEpisode($episode),
             'form' => $form->createView(),
         ]);
     }

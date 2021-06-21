@@ -23,7 +23,7 @@ class EpisodePicker extends AbstractController
         ]);
     }
 
-    static function getRandomEpisode(Episode $episode, $doc,  bool $program = true)
+    static function getRandomEpisode(Episode $episode, bool $program = true)
     {
         $programs = $episode->getSeason()
             ->getProgram()
