@@ -10,36 +10,36 @@
 <div class="card-episode mt-5 rounded">
     <h1 class="custom-title-dark medium text-center">{{episode.number}} - {{episode.title}}</h1>
     <p class="card-text light ms-5">{{ episode.synopsis }}</p>
-    <div class="d-flex justify-content-evenly flex-wrap mt-3 pb-3">
-        {# {% if prev is not null %}
+    {# <div class="d-flex justify-content-evenly flex-wrap mt-3 pb-3">
+        {% if prev is not null %}
         <a class="btn custom-btn-dark dark" href="{{ path('program_episode_show', { program: prev.season.program.slug, season: prev.season.id, episode: prev.slug}) }}">{{ prev.season.program.title }} - Saison {{prev.season.number}} - {{prev.title}}</a>
         {% endif %}
         {% if next is not null %}
         <a class="btn custom-btn-dark dark" href="{{ path('program_episode_show', { program: next.season.program.slug, season: next.season.id, episode: next.slug}) }}">{{ next.season.program.title }} - Saison {{next.season.number}} - {{next.title}}</a>
-        {% endif %} #}
-    </div>
+        {% endif %}
+    </div> #}
 </div>
 {% if app.user %}
 <div class="simple-card rounded container d-flex flex-column align-items-center mt-5">
-        <h3 class="custom-title medium mb-2">Ajouter un commentaire</h3>
-        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'method': 'POST'}}) }}
-        <div class="row">
-            <h3>Note</h3>
-            <div class="text-start">{{ form_errors(form.rate) }}</div>
-            <div>{{ form_widget(form.rate)}}</div>
-        </div>
-        <div class="row mt-3">
-            <h3>Commentaire</h3>
-            <div class="text-start">{{ form_errors(form.comment) }}</div>
-            <div>{{ form_widget(form.comment)}}</div>
-        </div>
-        <input class="btn custom-btn-dark mt-3" type="submit" value="Ajouter un commentaire">
-        {{ form_end(form)}}
+    <h3 class="custom-title medium mb-2">Ajouter un commentaire</h3>
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'method': 'POST'}}) }}
+    <div class="row">
+        <h3>Note</h3>
+        <div class="text-start">{{ form_errors(form.rate) }}</div>
+        <div>{{ form_widget(form.rate)}}</div>
     </div>
+    <div class="row mt-3">
+        <h3>Commentaire</h3>
+        <div class="text-start">{{ form_errors(form.comment) }}</div>
+        <div>{{ form_widget(form.comment)}}</div>
+    </div>
+    <input class="btn custom-btn-dark mt-3" type="submit" value="Ajouter un commentaire">
+    {{ form_end(form)}}
+</div>
 {% endif %}
 <div class="container rounded d-flex flex-wrap justify-content-evenly mt-4">
     {% for comment in episode.comments|reverse %}
-        {% include 'program/_comment.html.twig' %}
+    {% include "program/_comment.html.twig" %}
     {% endfor %}
 </div>
 <div class="container d-flex flex-column align-items-center mt-5">

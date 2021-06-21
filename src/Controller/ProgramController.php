@@ -15,6 +15,7 @@ use App\Service\EpisodePicker;
 use App\Service\Slugify;
 use App\Form\CommentType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
+use Symfony\Component\Finder\Exception\AccessDeniedException;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 
@@ -55,6 +56,7 @@ class ProgramController extends AbstractController
             $entityManager = $this->getDoctrine()->getManager();
             $slug = $slugify->generate($program->getTitle());
             $program->setSlug($slug);
+            $program->setOwner($this->getUser());
             $entityManager->persist($program);
             $entityManager->flush();
 
@@ -70,6 +72,69 @@ class ProgramController extends AbstractController
         return $this->render('program/new.html.twig', [
             'form' => $form->createView(),
         ]);
+    }
+    /** 
+     * @Route("/{program}/edit", methods={"GET", "POST"}, name="program_edit")
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"}} )
+     * @return Response
+    */
+    public function edit(Program $program, Request $request)
+    {
+        $form = $this->createForm(ProgramType::class, $program);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if (!($this->getUser() == $program->getOwner())) {
+                throw new AccessDeniedException('Only the owner can edit the program!');
+            }
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('program_index');
+        }
+
+        return $this->render('program/edit.html.twig', [
+            'program' => $program,
+            'form' => $form->createView(),
+        ]);
+    }
+
+    /** 
+     * @Route("/{program}/{season}/{episode}/{comment}/edit", methods={"GET", "POST"}, name="comment_edit")
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"}} )
+     * @ParamConverter("season", class="App\Entity\Season", options={"mapping": {"season": "id"}} )
+     * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episode": "slug"}} )
+     * @ParamConverter("comment", class="App\Entity\Comment", options={"mapping": {"comment": "id"}} )
+     * @return Response
+    */
+    public function commentEdit(Program $program, Season $season, Episode $episode, Comment $comment, Request $request)
+    {
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $this->getDoctrine()->getManager()->flush();
+            return $this->redirectToRoute('program_index');
+        }
+
+        return $this->render('program/comment_edit.html.twig', [
+            'comment' => $comment,
+            'form' => $form->createView(),
+        ]);
+    }
+     /**
+     * @Route("/{program}/{season}/{episode}/{comment}/delete", methods={"GET", "POST"}, name="comment_delete")
+     * @ParamConverter("program", class="App\Entity\Program", options={"mapping": {"program": "slug"}} )
+     * @ParamConverter("season", class="App\Entity\Season", options={"mapping": {"season": "id"}} )
+     * @ParamConverter("episode", class="App\Entity\Episode", options={"mapping": {"episode": "slug"}} )
+     * @ParamConverter("comment", class="App\Entity\Comment", options={"mapping": {"comment": "id"}} )
+     * @return Response
+     */
+    public function commentDelete(Program $program, Season $season, Episode $episode, Comment $comment, Request $request): Response
+    {
+        if ($this->isCsrfTokenValid('delete'.$comment->getId(), $request->request->get('_token'))) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->remove($comment);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('program_index');
     }
 
     /**

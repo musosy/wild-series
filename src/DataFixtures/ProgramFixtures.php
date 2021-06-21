@@ -52,6 +52,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
             $program->setSummary($data['description']);
             $program->setPoster($data['poster']);
             $program->setCategory($this->getReference('category_4'));
+            $program->setOwner($this->getReference('admin'));
             if ($program->getTitle() == 'Walking Dead') {
                 $program->addActor($this->getReference('actor_0'));
                 $program->addActor($this->getReference('actor_1'));
@@ -70,6 +71,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
                 $program->setTitle('testPrg_' . (10 * $i + $j));
                 $program->setSummary('testSmr_' . (10 * $i + $j));
                 $program->setPoster('testPst_' . (10 * $i + $j));
+                $program->setOwner($this->getReference('admin'));
                 $program->setCategory($this->getReference('category_' . $i));
                 $slug = $slugify->generate($program->getTitle());
                 $program->setSlug($slug);
@@ -77,15 +79,6 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
                 $this->addReference('programB_' . (10 * $i + $j), $program);
             }
         }
-        $slugify = new Slugify();
-        $testPrg = new Program();
-        $testPrg->setTitle('ŠŽšžŸÀÁÂÃÄÅÇÈÉÊËÌÍÎÏÐÑÒÓÔÕÖÙÚÛÜÝàáâãäåçèéêëìíîïðñòóôõöùúûüýÿ;-\'--__?;([')
-            ->setSummary('test')
-            ->setPoster('test')
-            ->setCategory($this->getReference('category_4'))
-            ->setSlug($slugify->generate($testPrg->getTitle()))
-        ;
-        $manager->persist($testPrg);
         $manager->flush();
     }
 
@@ -94,6 +87,7 @@ class ProgramFixtures extends Fixture implements DependentFixtureInterface
         return [
             CategoryFixtures::class,
             ActorFixtures::class,
+            UserFixtures::class
         ];
     }
 }

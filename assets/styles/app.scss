@@ -205,3 +205,12 @@ nav > a {
     color: $custom-dark !important;
 }
 //End
+//COMMENTS
+.comment-card {
+    background-color: $custom-sec;
+    padding: 1rem;
+    width: 16rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
